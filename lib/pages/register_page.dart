@@ -17,9 +17,9 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Logo(titulo: 'Registro'),
+                const Logo(titulo: 'Registro'),
                 _Form(),
-                Labels(
+                const Labels(
                   ruta: 'login',
                   titulo: '¿Ya tienes una cuenta?',
                   subTitulo: 'Ingresa ahora',

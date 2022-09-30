@@ -19,7 +19,7 @@ class Labels extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(titulo,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 15,
                 fontWeight: FontWeight.w300,
