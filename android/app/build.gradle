@@ -51,6 +51,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        minSdkVersion 18
     }
 
     buildTypes {
@@ -60,6 +61,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    compileSdkVersion 33
 }
 
 flutter {

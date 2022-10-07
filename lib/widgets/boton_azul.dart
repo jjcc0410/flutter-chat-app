@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BotonAzul extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const BotonAzul({super.key, required this.text, required this.onPressed});
 
@@ -12,10 +12,10 @@ class BotonAzul extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-        child: Container(
+        child: const SizedBox(
           width: double.infinity,
           height: 55,
-          child: const Center(
+          child: Center(
             child: Text(
               'Ingrese',
               style: TextStyle(color: Colors.white, fontSize: 17),

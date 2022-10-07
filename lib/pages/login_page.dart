@@ -1,6 +1,10 @@
+import 'package:chat/helpers/mostrar_alerta.dart';
+import 'package:chat/widgets/boton_azul.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
-import 'package:chat/widgets/custom_input.dart';
+import 'package:provider/provider.dart';
+
+import '../services/auth_service.dart';
+import '../widgets/custom_input.dart';
 import '../widgets/labels.dart';
 import '../widgets/logo.dart';
 
@@ -48,6 +52,8 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       margin: const EdgeInsets.only(top: 36),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -65,24 +71,24 @@ class __FormState extends State<_Form> {
             textController: passCtrl,
             isPassword: true,
           ),
-          Container(
-            child: ElevatedButton(
-              onPressed: () {
-                log(emailCtrl.text);
-                log(passCtrl.text);
-              },
-              style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-              child: Container(
-                width: double.infinity,
-                height: 55,
-                child: const Center(
-                  child: Text(
-                    'Ingrese',
-                    style: TextStyle(color: Colors.white, fontSize: 17),
-                  ),
-                ),
-              ),
-            ),
+          BotonAzul(
+            text: 'Ingrese',
+            onPressed: authService.autenticando
+                ? () => {}
+                : () async {
+                    FocusScope.of(context).unfocus();
+
+                    final loginOk = await authService.login(
+                        emailCtrl.text.trim(), passCtrl.text.trim());
+
+                    if (loginOk) {
+                      Navigator.pushReplacementNamed(context, 'usuarios');
+                    } else {
+                      // Mostara alerta
+                      mostrarAlerta(context, 'Login incorrecto',
+                          'Revise sus credenciales nuevamente');
+                    }
+                  },
           )
         ],
       ),
