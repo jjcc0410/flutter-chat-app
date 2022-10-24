@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,16 +16,17 @@ class AuthService with ChangeNotifier {
   final _storage = const FlutterSecureStorage();
 
   bool get autenticando => _autenticando;
+
   set autenticando(bool valor) {
     _autenticando = valor;
     notifyListeners();
   }
 
   // Getters del token de forma estática
-  static Future<String?> getToken() async {
+  static Future<String> getToken() async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: 'token');
-    return token;
+    return token.toString();
   }
 
   static Future<void> deleteToken() async {
@@ -37,11 +37,17 @@ class AuthService with ChangeNotifier {
   Future<bool> login(String email, String password) async {
     autenticando = true;
 
-    final data = {'email': email, 'password': password};
+    final data = {
+      'email': email,
+      'password': password,
+    };
 
     final uri = Uri.parse('${Environment.apiUrl}/login');
-    final resp = await http.post(uri,
-        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+    final resp = await http.post(
+      uri,
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     autenticando = false;
 
@@ -67,8 +73,11 @@ class AuthService with ChangeNotifier {
     };
 
     final uri = Uri.parse('${Environment.apiUrl}/login/new');
-    final resp = await http.post(uri,
-        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+    final resp = await http.post(
+      uri,
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     autenticando = false;
 
